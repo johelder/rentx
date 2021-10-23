@@ -6,6 +6,7 @@ import { useFonts, Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/
 import { Archivo_400Regular, Archivo_500Medium, Archivo_600SemiBold } from '@expo-google-fonts/archivo';
 
 import { Home } from './pages/Home';
+import { CarDetails } from './pages/CarDetails';
 
 import { ThemeProvider } from 'styled-components/native';
 import theme from './styles/theme';
@@ -22,7 +23,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <CarDetails />
     </ThemeProvider>
   );
 }
