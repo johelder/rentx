@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-import { Car } from '../../Components/Car';
+import { Car } from '../../components/Car';
 
 import Logo from '../../assets/logo.svg';
 
