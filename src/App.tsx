@@ -8,6 +8,7 @@ import { Archivo_400Regular, Archivo_500Medium, Archivo_600SemiBold } from '@exp
 import { Home } from './pages/Home';
 import { CarDetails } from './pages/CarDetails';
 import { Scheduling } from './pages/Scheduling';
+import { SchedulingDetails } from './pages/SchedulingDetails';
 
 import { ThemeProvider } from 'styled-components/native';
 import theme from './styles/theme';
@@ -24,7 +25,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Scheduling />
+      <SchedulingDetails />
     </ThemeProvider>
   );
 }
