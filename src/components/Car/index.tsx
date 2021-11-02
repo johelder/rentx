@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigation } from '@react-navigation/native';
+
 import GasolineIcon from '../../assets/gasoline.svg';
 
 import * as S from './styles';
@@ -19,8 +21,15 @@ interface ICardProps {
 }
 
 export function Car({ data }: ICardProps) {
+
+  const navigation = useNavigation();
+
+  function handleNavigate() {
+    navigation.navigate('CarDetails');
+  }
+
   return (
-    <S.Container>
+    <S.Container onPress={handleNavigate}>
       <S.Details>
         <S.Brand>{data.brand}</S.Brand>
         <S.Name>{data.name}</S.Name>

@@ -1,6 +1,9 @@
 import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'styled-components';
+
 import { Acessory } from '../../components/Acessory';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -15,12 +18,15 @@ import peopleIcon from '../../assets/people.svg';
 
 import Feather from '@expo/vector-icons/Feather';
 
-import { useTheme } from 'styled-components';
 import * as S from './styles';
 
 export function SchedulingDetails() {
-
+  const navigation = useNavigation();
   const theme = useTheme();
+
+  function handleNavigate() {
+    navigation.navigate('SchedulingComplete')
+  }
 
   return (
     <S.Container>
@@ -92,7 +98,11 @@ export function SchedulingDetails() {
       </S.Content>
 
       <S.Footer>
-        <Button title="Alugar agora" color={theme.colors.success} />
+        <Button 
+          title="Alugar agora"
+          color={theme.colors.success}
+          onPress={handleNavigate}
+        />
       </S.Footer>
     </S.Container>
   );
