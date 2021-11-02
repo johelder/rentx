@@ -2,22 +2,14 @@ import React from 'react';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { CarDTO } from '../../dtos/CarDTO';
+
 import GasolineIcon from '../../assets/gasoline.svg';
 
 import * as S from './styles';
 
-interface ICardData {
-  brand: string;
-  name: string;
-  rent: {
-    period: string;
-    price: number;
-  };
-  thumbnail: string;
-}
-
 interface ICardProps {
-  data: ICardData;
+  data: CarDTO;
 }
 
 export function Car({ data }: ICardProps) {
