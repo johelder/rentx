@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { useNavigation } from '@react-navigation/native';
+
 import { api } from "../../services/api";
 import { CarDTO } from "../../dtos/CarDTO";
 
@@ -15,6 +17,12 @@ import { Load } from "../../components/Load";
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigation = useNavigation();
+
+  function handleNavigate(car: CarDTO) {
+    navigation.navigate('CarDetails', { car });
+  }
 
   const fetchCars = useCallback(async () => {
     try {
@@ -52,7 +60,7 @@ export function Home() {
         <S.CarList
           data={cars}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Car data={item} />}
+          renderItem={({ item }) => <Car data={item} onPress={() => handleNavigate(item)} />}
         />
       )}
     </S.Container>
