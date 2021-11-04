@@ -1,27 +1,29 @@
 import React from 'react';
-
-import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from "react-native";
 
 import { CarDTO } from '../../dtos/CarDTO';
 
 import GasolineIcon from '../../assets/gasoline.svg';
 
 import * as S from './styles';
+import { RectButtonProps } from 'react-native-gesture-handler';
+import { getAccesoryIcon } from '../../utils/getAccessoryIcon';
 
-interface ICardProps {
+interface ICardProps extends RectButtonProps {
   data: CarDTO;
 }
 
-export function Car({ data }: ICardProps) {
+export function Car({ data, ...rest }: ICardProps) {
 
-  const navigation = useNavigation();
-
-  function handleNavigate() {
-    navigation.navigate('CarDetails');
-  }
+  const MotorIcon = getAccesoryIcon(data.fuel_type);
 
   return (
-    <S.Container onPress={handleNavigate}>
+    <S.Container {...rest}>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
       <S.Details>
         <S.Brand>{data.brand}</S.Brand>
         <S.Name>{data.name}</S.Name>
@@ -33,7 +35,7 @@ export function Car({ data }: ICardProps) {
           </S.Rent>
 
           <S.Type>
-            <GasolineIcon />
+            <MotorIcon />
           </S.Type>
         </S.About>
       </S.Details>
