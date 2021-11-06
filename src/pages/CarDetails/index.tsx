@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { CarDTO } from "../../dtos/CarDTO";
 import { getAccesoryIcon } from "../../utils/getAccessoryIcon";
 
-import { Accessory } from "../../components/Acessory";
+import { Accessory } from "../../components/Accessory";
 import { BackButton } from "../../components/BackButton";
 import { ImageSlider } from "../../components/ImageSlider";
 import { Button } from "../../components/Button";
@@ -22,7 +22,7 @@ export function CarDetails() {
   const { car } = route.params as IRouteParams;
 
   function handleNavigate() {
-    navigation.navigate("Scheduling");
+    navigation.navigate("Scheduling", { car });
   }
 
   function handleGoBack() {
