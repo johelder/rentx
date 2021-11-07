@@ -56,7 +56,18 @@ export function SchedulingDetails() {
       ...dates,
     };
 
-    api
+    await api
+      .post("/schedules_byuser", {
+        user_id: 1,
+        car,
+      })
+      .catch(() =>
+        Alert.alert(
+          "Tente novamente mais tarde, ocorreu um erro ao alugar o carro."
+        )
+      );
+
+    await api
       .put(`schedules_bycars/${car.id}`, {
         id: car.id,
         unavailable_dates,
