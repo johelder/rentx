@@ -2,26 +2,33 @@ import React, { useCallback, useEffect, useState } from "react";
 import { StatusBar } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from "styled-components";
 
 import { api } from "../../services/api";
 import { CarDTO } from "../../dtos/CarDTO";
 
 import { Car } from "../../components/Car";
+import { Load } from "../../components/Load";
 
 import Logo from "../../assets/logo.svg";
 
 import * as S from "./styles";
-import { Load } from "../../components/Load";
 
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigation();
+  const theme = useTheme();
 
   function handleNavigate(car: CarDTO) {
     navigation.navigate('CarDetails', { car });
+  }
+
+  function handleMyCars() {
+    navigation.navigate('MyCars');
   }
 
   const fetchCars = useCallback(async () => {
@@ -62,6 +69,14 @@ export function Home() {
           renderItem={({ item }) => <Car data={item} onPress={() => handleNavigate(item)} />}
         />
       )}
+
+      <S.MyCarsButton onPress={handleMyCars}>
+        <Ionicons 
+          name="car-sport"
+          size={32}
+          color={theme.colors.background_secondary}
+        />
+      </S.MyCarsButton>
     </S.Container>
   );
 }
