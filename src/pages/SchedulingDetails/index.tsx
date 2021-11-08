@@ -37,6 +37,7 @@ export function SchedulingDetails() {
   const [rentalPeriod, setRentalPeriod] = useState<IRentalPeriodProps>(
     {} as IRentalPeriodProps
   );
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
   const theme = useTheme();
@@ -49,6 +50,7 @@ export function SchedulingDetails() {
   }, []);
 
   async function handleConfirmRental() {
+    setLoading(true);
     const SchedulesByCar = await api.get(`schedules_bycars/${car.id}`);
 
     const unavailable_dates = {
@@ -60,6 +62,8 @@ export function SchedulingDetails() {
       .post("/schedules_byuser", {
         user_id: 1,
         car,
+        startDate: rentalPeriod.startDayFormatted,
+        endDate: rentalPeriod.endingDayFormatted,
       })
       .catch(() =>
         Alert.alert(
@@ -73,11 +77,12 @@ export function SchedulingDetails() {
         unavailable_dates,
       })
       .then(() => navigation.navigate("SchedulingComplete"))
-      .catch(() =>
+      .catch(() => {
         Alert.alert(
           "Tente novamente mais tarde, ocorreu um erro ao alugar o carro."
-        )
-      );
+        );
+        setLoading(false);
+      });
   }
 
   function handleBack() {
@@ -165,6 +170,8 @@ export function SchedulingDetails() {
           title="Alugar agora"
           color={theme.colors.success}
           onPress={handleConfirmRental}
+          enabled={!loading}
+          loading={loading}
         />
       </S.Footer>
     </S.Container>

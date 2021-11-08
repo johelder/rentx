@@ -1,17 +1,38 @@
-import React from 'react';
+import React from "react";
+import { ActivityIndicator } from "react-native";
+import { useTheme } from "styled-components";
 
-import * as S from './styles';
+import * as S from "./styles";
 
 interface IButtonProps {
   title: string;
   color?: string;
   onPress: () => void;
+  enabled?: boolean;
+  loading?: boolean;
 }
 
-export function Button({ title, color, onPress }: IButtonProps) {
+export function Button({
+  title,
+  color,
+  onPress,
+  enabled = true,
+  loading = false,
+}: IButtonProps) {
+  const theme = useTheme();
+
   return (
-    <S.Container color={color} onPress={onPress}>
-      <S.Title>{title}</S.Title>
+    <S.Container
+      color={color}
+      onPress={onPress}
+      enabled={enabled}
+      style={{ opacity: enabled === false || loading ? 0.5 : 1 }}
+    >
+      {loading ? (
+        <ActivityIndicator color={theme.colors.shape} />
+      ) : (
+        <S.Title>{title}</S.Title>
+      )}
     </S.Container>
   );
 }
