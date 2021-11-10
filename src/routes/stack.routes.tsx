@@ -1,19 +1,21 @@
-import React from 'react';
+import React from "react";
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from "@react-navigation/stack";
 
-import { Home } from '../pages/Home';
-import { CarDetails } from '../pages/CarDetails';
-import { Scheduling } from '../pages/Scheduling';
-import { SchedulingDetails } from '../pages/SchedulingDetails';
-import { SchedulingComplete } from '../pages/SchedulingComplete';
-import { MyCars } from '../pages/MyCars';
+import { Home } from "../pages/Home";
+import { CarDetails } from "../pages/CarDetails";
+import { Scheduling } from "../pages/Scheduling";
+import { SchedulingDetails } from "../pages/SchedulingDetails";
+import { SchedulingComplete } from "../pages/SchedulingComplete";
+import { MyCars } from "../pages/MyCars";
+import { Splash } from "../pages/Splash";
 
 const { Navigator, Screen } = createStackNavigator();
 
 export function StackRoutes() {
   return (
-    <Navigator headerMode="none">
+    <Navigator headerMode="none" initialRouteName="Splash">
+      <Screen name="Splash" component={Splash} />
       <Screen name="Home" component={Home} />
       <Screen name="CarDetails" component={CarDetails} />
       <Screen name="Scheduling" component={Scheduling} />
