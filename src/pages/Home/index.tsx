@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { StatusBar, StyleSheet } from "react-native";
+import { StatusBar, StyleSheet, BackHandler } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -11,7 +11,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   useAnimatedGestureHandler,
-  withSpring
+  withSpring,
 } from "react-native-reanimated";
 const AnimatedButton = Animated.createAnimatedComponent(RectButton);
 
@@ -80,6 +80,10 @@ export function Home() {
 
   useEffect(() => {
     fetchCars();
+  }, []);
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", () => true);
   }, []);
 
   return (
