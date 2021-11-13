@@ -6,7 +6,7 @@ import { useTheme } from "styled-components";
 
 import { BackButton } from "../../components/BackButton";
 import { Car } from "../../components/Car";
-import { Load } from "../../components/Load";
+import { LoadAnimation } from "../../components/LoadAnimation";
 
 import { CarDTO } from "../../dtos/CarDTO";
 import { api } from "../../services/api";
@@ -65,7 +65,7 @@ export function MyCars() {
       </S.Header>
 
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <S.Content>
           <S.Appointments>
