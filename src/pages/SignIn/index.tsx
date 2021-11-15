@@ -4,7 +4,10 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
+
+import * as Yup from "yup";
 
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
@@ -19,6 +22,23 @@ export function SignIn() {
   const [password, setPassword] = useState("");
 
   const theme = useTheme();
+
+  async function handleSignIn() {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string().required("Email obrigatório").email("Email inválido"),
+        password: Yup.string().required("Senha obrigatória"),
+      });
+
+      await schema.validate({ email, password });
+    } catch (error) {
+      if(error instanceof Yup.ValidationError) {
+        return Alert.alert('Peraí', error.message);
+      }
+
+      Alert.alert('Tente novamente mais tarde', 'Ocorreu um erro na autentição.');
+    }
+  }
 
   return (
     <KeyboardAvoidingView behavior="position" enabled>
@@ -60,8 +80,8 @@ export function SignIn() {
           <S.Footer>
             <Button
               title="Login"
-              onPress={() => {}}
-              enabled={false}
+              onPress={handleSignIn}
+              enabled={true}
               loading={false}
             />
 
