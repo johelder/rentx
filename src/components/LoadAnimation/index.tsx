@@ -3,7 +3,7 @@ import LottieView from "lottie-react-native";
 
 import loadingCar from "../../assets/carAnimation.json";
 
-import * as S from './styles';
+import * as S from "./styles";
 
 export function LoadAnimation() {
   return (

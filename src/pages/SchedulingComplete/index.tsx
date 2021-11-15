@@ -15,12 +15,16 @@ export function SchedulingComplete() {
   const { width } = useWindowDimensions();
 
   function handleNavigate() {
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   }
 
   return (
     <S.Container>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
 
       <BackgroundIcon width={width} />
 
@@ -29,8 +33,8 @@ export function SchedulingComplete() {
 
         <S.Title>Carro alugado!</S.Title>
         <S.Message>
-          Agora você só precisa ir {'\n'} 
-          até a concessionária da RENTX {'\n'} 
+          Agora você só precisa ir {"\n"}
+          até a concessionária da RENTX {"\n"}
           pegar o seu automóvel.
         </S.Message>
       </S.Content>

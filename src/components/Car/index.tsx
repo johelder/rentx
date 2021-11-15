@@ -1,20 +1,19 @@
-import React from 'react';
+import React from "react";
 import { StatusBar } from "react-native";
 
-import { CarDTO } from '../../dtos/CarDTO';
+import { CarDTO } from "../../dtos/CarDTO";
 
-import GasolineIcon from '../../assets/gasoline.svg';
+import GasolineIcon from "../../assets/gasoline.svg";
 
-import * as S from './styles';
-import { RectButtonProps } from 'react-native-gesture-handler';
-import { getAccesoryIcon } from '../../utils/getAccessoryIcon';
+import * as S from "./styles";
+import { RectButtonProps } from "react-native-gesture-handler";
+import { getAccesoryIcon } from "../../utils/getAccessoryIcon";
 
 interface ICardProps extends RectButtonProps {
   data: CarDTO;
 }
 
 export function Car({ data, ...rest }: ICardProps) {
-
   const MotorIcon = getAccesoryIcon(data.fuel_type);
 
   return (

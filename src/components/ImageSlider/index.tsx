@@ -10,7 +10,7 @@ interface IImageSliderProps {
 interface ICarrosselImageChangedInfoProps {
   viewableItems: ViewToken[];
   changed: ViewToken[];
-} 
+}
 
 export function ImageSlider({ imagesUrl }: IImageSliderProps) {
   const [imageIndex, setImageIndex] = useState(0);

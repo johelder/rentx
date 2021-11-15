@@ -115,9 +115,7 @@ export function CarDetails() {
           ))}
         </S.Accessories>
 
-        <S.About>
-          {car.about}
-        </S.About>
+        <S.About>{car.about}</S.About>
       </Animated.ScrollView>
 
       <S.Footer>
