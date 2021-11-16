@@ -6,6 +6,7 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import * as Yup from "yup";
 
@@ -21,22 +22,28 @@ export function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { navigate } = useNavigation();
   const theme = useTheme();
 
   async function handleSignIn() {
     try {
       const schema = Yup.object().shape({
-        email: Yup.string().required("Email obrigatório").email("Email inválido"),
+        email: Yup.string()
+          .required("Email obrigatório")
+          .email("Email inválido"),
         password: Yup.string().required("Senha obrigatória"),
       });
 
       await schema.validate({ email, password });
     } catch (error) {
-      if(error instanceof Yup.ValidationError) {
-        return Alert.alert('Peraí', error.message);
+      if (error instanceof Yup.ValidationError) {
+        return Alert.alert("Peraí", error.message);
       }
 
-      Alert.alert('Tente novamente mais tarde', 'Ocorreu um erro na autentição.');
+      Alert.alert(
+        "Tente novamente mais tarde",
+        "Ocorreu um erro na autentição."
+      );
     }
   }
 
@@ -88,7 +95,7 @@ export function SignIn() {
             <Button
               title="Criar conta gratuita"
               color={theme.colors.background_secondary}
-              onPress={() => {}}
+              onPress={() => navigate("SignUpFirstStep")}
               loading={false}
               light
             />
