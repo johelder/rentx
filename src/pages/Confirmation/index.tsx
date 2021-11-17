@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar, useWindowDimensions } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { ConfirmButton } from "../../components/ConfirmButton";
 
@@ -10,12 +10,21 @@ import DoneIcon from "../../assets/done.svg";
 
 import * as S from "./styles";
 
-export function SchedulingComplete() {
+interface IRouteParams {
+  title: string;
+  message: string;
+  nextScreen: string;
+}
+
+export function Confirmation() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { title, message, nextScreen } = route.params as IRouteParams;
+
   const { width } = useWindowDimensions();
 
   function handleNavigate() {
-    navigation.navigate("Home");
+    navigation.navigate(nextScreen);
   }
 
   return (
@@ -31,12 +40,8 @@ export function SchedulingComplete() {
       <S.Content>
         <DoneIcon width={80} height={80} />
 
-        <S.Title>Carro alugado!</S.Title>
-        <S.Message>
-          Agora você só precisa ir {"\n"}
-          até a concessionária da RENTX {"\n"}
-          pegar o seu automóvel.
-        </S.Message>
+        <S.Title>{title}</S.Title>
+        <S.Message>{message}</S.Message>
       </S.Content>
 
       <S.Footer>
