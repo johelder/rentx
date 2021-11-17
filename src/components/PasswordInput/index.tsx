@@ -11,7 +11,7 @@ import * as S from "./styles";
 
 interface IInputProps extends TextInputProps {
   iconName: React.ComponentProps<typeof Feather>["name"];
-  value;
+  value?: string;
 }
 
 export function PasswordInput({ iconName, value, ...rest }: IInputProps) {
