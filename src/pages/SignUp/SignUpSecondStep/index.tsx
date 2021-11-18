@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { api } from "../../../services/api";
 
 import { BackButton } from "../../../components/BackButton";
 import { Bullet } from "../../../components/Bullet";
@@ -45,11 +46,23 @@ export function SignUpSecondStep() {
       return Alert.alert("As senhas não conferem");
     }
 
-    navigate("Confirmation", {
-      title: "Conta criada!",
-      message: "",
-      nextScreen: "SignIn",
-    });
+    api
+      .post("/users", {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicensed,
+        password,
+      })
+      .then(() => {
+        navigate("Confirmation", {
+          title: "Conta criada!",
+          message: "",
+          nextScreen: "SignIn",
+        });
+      })
+      .catch(() => {
+        Alert.alert("Peraí", "Não foi possível cadastrar");
+      });
   }
 
   return (
