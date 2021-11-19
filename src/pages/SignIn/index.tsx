@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { useAuth } from "../../hooks/auth";
+
 import * as Yup from "yup";
 
 import { Button } from "../../components/Button";
@@ -22,6 +24,8 @@ export function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { signIn } = useAuth();
+
   const { navigate } = useNavigation();
   const theme = useTheme();
 
@@ -35,6 +39,8 @@ export function SignIn() {
       });
 
       await schema.validate({ email, password });
+
+      signIn({ email, password });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         return Alert.alert("Peraí", error.message);
