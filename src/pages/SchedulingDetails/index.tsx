@@ -46,7 +46,7 @@ export function SchedulingDetails() {
   const { car, dates } = route.params as IRouteParams;
 
   const rentalTotal = useMemo(() => {
-    return Number(car.rent.price * dates.length);
+    return Number(car.price * dates.length);
   }, []);
 
   async function handleConfirmRental() {
@@ -127,7 +127,7 @@ export function SchedulingDetails() {
 
           <S.Rent>
             <S.Period>Ao Dia</S.Period>
-            <S.Price>R$ {car.rent.price}</S.Price>
+            <S.Price>R$ {car.price}</S.Price>
           </S.Rent>
         </S.Details>
 
@@ -165,7 +165,7 @@ export function SchedulingDetails() {
         <S.RentalPrice>
           <S.RentalPriceDetails>
             <S.RentalPriceLabel>TOTAL</S.RentalPriceLabel>
-            <S.RentalPriceQuota>{`R$ ${car.rent.price} x${dates.length} diárias`}</S.RentalPriceQuota>
+            <S.RentalPriceQuota>{`R$ ${car.price} x${dates.length} diárias`}</S.RentalPriceQuota>
           </S.RentalPriceDetails>
           <S.RentalPriceTotal>R$ {rentalTotal}</S.RentalPriceTotal>
         </S.RentalPrice>

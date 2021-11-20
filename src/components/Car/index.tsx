@@ -3,11 +3,10 @@ import { StatusBar } from "react-native";
 
 import { CarDTO } from "../../dtos/CarDTO";
 
-import GasolineIcon from "../../assets/gasoline.svg";
-
-import * as S from "./styles";
 import { RectButtonProps } from "react-native-gesture-handler";
 import { getAccesoryIcon } from "../../utils/getAccessoryIcon";
+
+import * as S from "./styles";
 
 interface ICardProps extends RectButtonProps {
   data: CarDTO;
@@ -29,8 +28,8 @@ export function Car({ data, ...rest }: ICardProps) {
 
         <S.About>
           <S.Rent>
-            <S.Period>{data.rent.period}</S.Period>
-            <S.Price>{`R$ ${data.rent.price}`}</S.Price>
+            <S.Period>{data.period}</S.Period>
+            <S.Price>{`R$ ${data.price}`}</S.Price>
           </S.Rent>
 
           <S.Type>
