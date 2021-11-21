@@ -1,18 +1,22 @@
-import { setDate } from "date-fns";
-import React, { createContext, useState, ReactNode, useContext } from "react";
+import React, {
+  createContext,
+  useState,
+  ReactNode,
+  useContext,
+  useEffect,
+} from "react";
 import { api } from "../services/api";
+import { database } from "../database";
+import { User } from "../database/model/User";
 
 interface IUser {
+  id: string;
+  user_id: string;
   name: string;
   email: string;
-  password: string;
-  drive_license: string;
+  driver_license: string;
   avatar: string;
-}
-
-interface IStateAuth {
   token: string;
-  user: IUser;
 }
 
 interface ISignInCredentials {
@@ -32,19 +36,52 @@ interface IAuthContext {
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 const AuthProvider = ({ children }: IAuthProviderProps) => {
-  const [data, setData] = useState<IStateAuth>({} as IStateAuth);
+  const [data, setData] = useState<IUser>({} as IUser);
 
   const signIn = async ({ email, password }: ISignInCredentials) => {
-    const response = await api.post("/sessions", { email, password });
+    try {
+      const response = await api.post("/sessions", { email, password });
 
-    const { token, user } = response.data;
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      const { token, user } = response.data;
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    setData({ token, user });
+      const userCollection = await database.get<User>("users");
+
+      await database.write(async () => {
+        await userCollection.create((newUser) => {
+          (newUser.user_id = user.id),
+            (newUser.name = user.name),
+            (newUser.email = user.email),
+            (newUser.driver_license = user.driver_license),
+            (newUser.avatar = user.avatar),
+            (newUser.token = token);
+        });
+      });
+
+      setData({ ...user, token });
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
+  const loadUserData = async () => {
+    const userCollection =  database.get<User>('users');
+    const response = await userCollection.query().fetch();
+
+    if(response.length > 0) {
+      const userData = response[0] as unknown as User;
+      api.defaults.headers.common["Authorization"] = `Bearer ${userData.token}`;
+
+      setData(userData);
+    }
+  };
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
+    <AuthContext.Provider value={{ user: data, signIn }}>
       {children}
     </AuthContext.Provider>
   );
