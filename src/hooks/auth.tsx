@@ -31,6 +31,7 @@ interface IAuthProviderProps {
 interface IAuthContext {
   user: IUser;
   signIn: (credentials: ISignInCredentials) => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -64,11 +65,27 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     }
   };
 
+  console.log(data);
+
+  const signOut = async () => {
+    try {
+      const userCollection = database.get<User>("users");
+      await database.write(async () => {
+        const userSelected = await userCollection.find(data.id);
+        await userSelected.destroyPermanently();
+      });
+
+      setData({} as IUser);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   const loadUserData = async () => {
-    const userCollection =  database.get<User>('users');
+    const userCollection = database.get<User>("users");
     const response = await userCollection.query().fetch();
 
-    if(response.length > 0) {
+    if (response.length > 0) {
       const userData = response[0] as unknown as User;
       api.defaults.headers.common["Authorization"] = `Bearer ${userData.token}`;
 
@@ -81,7 +98,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data, signIn }}>
+    <AuthContext.Provider value={{ user: data, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
