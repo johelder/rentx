@@ -17,6 +17,7 @@ import * as S from "./styles";
 export function Home() {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  let isMounted = true;
 
   const navigation = useNavigation();
 
@@ -37,6 +38,8 @@ export function Home() {
 
   useEffect(() => {
     fetchCars();
+
+    return () => isMounted = false;
   }, []);
 
   return (
