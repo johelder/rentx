@@ -4,8 +4,8 @@ import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { AppStackRoutes } from "./app.stack.routes";
-import { Home } from "../pages/Home";
 import { MyCars } from "../pages/MyCars";
+import { Profile } from "../pages/Profile";
 
 import HomeIcon from "../assets/home.svg";
 import CarIcon from "../assets/car.svg";
@@ -54,7 +54,7 @@ export function AppTabRoutes() {
 
       <Screen
         name="Profile"
-        component={Home}
+        component={Profile}
         options={{
           tabBarIcon: ({ color }) => (
             <ProfileIcon width={24} height={24} fill={color} />
