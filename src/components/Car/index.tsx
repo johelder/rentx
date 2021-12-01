@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar } from "react-native";
 
-import { CarDTO } from "../../dtos/CarDTO";
+import { Car as ModelCar } from "../../database/model/Car";
 
 import { RectButtonProps } from "react-native-gesture-handler";
 import { getAccesoryIcon } from "../../utils/getAccessoryIcon";
@@ -9,7 +9,7 @@ import { getAccesoryIcon } from "../../utils/getAccessoryIcon";
 import * as S from "./styles";
 
 interface ICardProps extends RectButtonProps {
-  data: CarDTO;
+  data: ModelCar;
 }
 
 export function Car({ data, ...rest }: ICardProps) {
