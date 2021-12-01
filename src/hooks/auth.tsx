@@ -32,12 +32,15 @@ interface IAuthContext {
   user: IUser;
   signIn: (credentials: ISignInCredentials) => Promise<void>;
   signOut: () => Promise<void>;
+  updatedUser: (user: IUser) => Promise<void>;
+  loading: boolean;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [data, setData] = useState<IUser>({} as IUser);
+  const [loading, setLoading] = useState(true);
 
   const signIn = async ({ email, password }: ISignInCredentials) => {
     try {
@@ -65,8 +68,6 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     }
   };
 
-  console.log(data);
-
   const signOut = async () => {
     try {
       const userCollection = database.get<User>("users");
@@ -90,7 +91,24 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       api.defaults.headers.common["Authorization"] = `Bearer ${userData.token}`;
 
       setData(userData);
+      setLoading(false);
     }
+  };
+
+  const updatedUser = async (user: IUser) => {
+    await database.write(async () => {
+      const userCollection = database.get<User>("users");
+      const userSelected = await userCollection.find(user.id);
+
+      await userSelected.update((userData) => {
+        userData.name = user.name;
+        userData.email = user.email;
+        userData.driver_license = user.driver_license;
+        userData.avatar = user.avatar;
+      });
+    });
+
+    setData(user);
   };
 
   useEffect(() => {
@@ -98,7 +116,9 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user: data, signIn, signOut, updatedUser, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
